@@ -18,7 +18,7 @@ module Onebox
       end
 
       def to_html
-        "<embed height='415' width='544' quality='high' allowfullscreen='true' type='application/x-shockwave-flash' src='https://static-s.bilibili.com/miniloader.swf' flashvars='aid=#{video_id}&page=1' pluginspage='http://www.adobe.com/shockwave/download/download.cgi?P1_Prod_Version=ShockwaveFlash'></embed>"
+        "<iframe src="https://www.bilibili.com/html/player.html?aid={video_id}&page=1" frameborder="0" width="640" height="430" allowfullscreen="true"></iframe>"
       end
 
       def placeholder_html
