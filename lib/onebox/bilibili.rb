@@ -1,3 +1,4 @@
+
 Onebox = Onebox
 
 module Onebox
@@ -6,16 +7,17 @@ module Onebox
       include Engine
       include StandardEmbed
       matches_regexp(/^https?:\/\/(www\.)?(bilibili.com)\/(video\/)(av|bv)(\w+)/i)
+      always_https
       def to_html
-        "<iframe id=\"player\" src=\"https://www.bilibili.com/html/player.html?aid=#{id()}&page=1&as_wide=1\" scrolling=\"no\" board=\"0\" frameborder=\"no\" framespacing=\"0\" allowfullscreen=\"true\" allowtransparency=\"true\" class=\"video_player\" style=\"border: none; margin: 0 auto;\">"
+        placeholder_html()
       end
       def placeholder_html
-        "<iframe id=\"player\" src=\"https://www.bilibili.com/html/player.html?aid=#{id()}&page=1&as_wide=1\" scrolling=\"no\" board=\"0\" frameborder=\"no\" framespacing=\"0\" allowfullscreen=\"true\" allowtransparency=\"true\" class=\"video_player\" style=\"border: none; margin: 0 auto;\">"
+        "<iframe src=\"https://player.bilibili.com/player.html?aid=#{id()}&amp;page=1&amp;as_wide=1\" frameborder=\"0\" width=\"640\" height=\"430\" allowfullscreen=\"true\" seamless=\"seamless\" sandbox=\"allow-same-origin allow-scripts allow-forms allow-popups allow-popups-to-escape-sandbox allow-presentation\"></iframe>"
       end
 
       
       private
-      # copy from https://github.com/ShiSheng233/bili_BV/blob/master/biliBV/__init__.py
+
       key = 'fZodR9XQDSUm21yCkr6zBqiveYah8bt4xsWpHnJE7jL5VG3guMTKNPAwcF'
       $dic = {}
       for a in 0..57
@@ -31,12 +33,11 @@ module Onebox
         end
       return (r-$add)^$xor
       end
-      
 
       def id
         match = @url.match(/(bv|av)(.*)/i)
-        if match[1] == "BV" or match[1] == "bv"
-          return decode("BV"+match[2])
+        if match[1] == "BV" or match[1] == "av"
+          return decode(match[1]+match[2])
         else
           return match[2]
           
